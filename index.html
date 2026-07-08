@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PGPM Schedule">
+<meta name="theme-color" content="#09090b">
+<title>PGPM Schedule · IIM Trichy</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K46J562HLN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K46J562HLN');
+</script>
+<style>
+/* ── TOKENS ── */
+:root {
+  --ease: all .2s ease;
+}
+[data-theme="dark"] {
+  --bg:       #09090b;
+  --surface:  #18181b;
+  --card:     #18181b;
+  --border:   #27272a;
+  --text:     #fafafa;
+  --muted:    #52525b;
+  --submuted: #3f3f46;
+  --accent:   #7c5cfc;
+  --grad1:    #6d28d9;
+  --grad2:    #db2777;
+  --tag-bg:   rgba(109,40,217,.12);
+  --tag-br:   rgba(109,40,217,.3);
+  --prereads-top: rgba(109,40,217,.15);
+  --prereads-top-br: rgba(109,40,217,.25);
+  --prereads-card: rgba(0,0,0,.25);
+  --prereads-card-br: rgba(255,255,255,.07);
+  --prereads-ref: rgba(255,255,255,.04);
+  --tab-active-bg: #18181b;
+  --install-bg: #18181b;
+  --ob-bg:    #09090b;
+  --ob-card:  #18181b;
+  --ob-border:#27272a;
+}
+[data-theme="light"] {
+  --bg:       #f5f5f7;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --border:   #e5e7eb;
+  --text:     #1d1d1f;
+  --muted:    #86868b;
+  --submuted: #c7c7cc;
+  --accent:   #5e5ce6;
+  --grad1:    #5e5ce6;
+  --grad2:    #d63af9;
+  --tag-bg:   rgba(94,92,230,.08);
+  --tag-br:   rgba(94,92,230,.2);
+  --prereads-top: rgba(94,92,230,.08);
+  --prereads-top-br: rgba(94,92,230,.2);
+  --prereads-card: rgba(94,92,230,.04);
+  --prereads-card-br: rgba(94,92,230,.15);
+  --prereads-ref: rgba(0,0,0,.03);
+  --tab-active-bg: #f5f5f7;
+  --install-bg: #f0f0f5;
+  --ob-bg:    #f5f5f7;
+  --ob-card:  #ffffff;
+  --ob-border:#e5e7eb;
+}
+
+/* ── COURSE COLOURS (same both themes, just opacity differs) ── */
+[data-theme="dark"]  { --bs-ac:#7c5cfc; --bs-bg:rgba(124,92,252,.13); --bs-br:rgba(124,92,252,.3); }
+[data-theme="dark"]  { --fra-ac:#f7567c; --fra-bg:rgba(247,86,124,.13); --fra-br:rgba(247,86,124,.3); }
+[data-theme="dark"]  { --me-ac:#ffd166;  --me-bg:rgba(255,209,102,.13); --me-br:rgba(255,209,102,.3); }
+[data-theme="dark"]  { --mc-ac:#06d6a0;  --mc-bg:rgba(6,214,160,.13);  --mc-br:rgba(6,214,160,.3); }
+[data-theme="dark"]  { --mmi-ac:#38bdf8; --mmi-bg:rgba(56,189,248,.13); --mmi-br:rgba(56,189,248,.3); }
+[data-theme="dark"]  { --miob-ac:#ef8c4e; --miob-bg:rgba(239,140,78,.13); --miob-br:rgba(239,140,78,.3); }
+[data-theme="light"] { --bs-ac:#5e5ce6; --bs-bg:rgba(94,92,230,.08); --bs-br:rgba(94,92,230,.2); }
+[data-theme="light"] { --fra-ac:#e0175d; --fra-bg:rgba(224,23,93,.06); --fra-br:rgba(224,23,93,.18); }
+[data-theme="light"] { --me-ac:#b45309;  --me-bg:rgba(180,83,9,.06);  --me-br:rgba(180,83,9,.18); }
+[data-theme="light"] { --mc-ac:#059669;  --mc-bg:rgba(5,150,105,.06); --mc-br:rgba(5,150,105,.18); }
+[data-theme="light"] { --mmi-ac:#0284c7; --mmi-bg:rgba(2,132,199,.06); --mmi-br:rgba(2,132,199,.18); }
+[data-theme="light"] { --miob-ac:#c2410c; --miob-bg:rgba(194,65,12,.06); --miob-br:rgba(194,65,12,.18); }
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;transition:background-color .25s,color .2s,border-color .2s}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;max-width:600px;margin:0 auto}
+
+/* HEADER */
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 14px 0;flex-shrink:0}
+.hdr-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--grad1),var(--grad2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.hdr-info h1{font-size:13px;font-weight:700;color:var(--text)}
+.hdr-info p{font-size:10px;color:var(--muted);margin-top:1px}
+.hdr-actions{margin-left:auto;display:flex;align-items:center;gap:6px}
+/* Theme toggle */
+.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--ease)}
+.theme-btn:hover{border-color:var(--accent)}
+/* Change section */
+.change-sec{background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--muted);font-size:9px;font-weight:700;padding:3px 8px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.change-sec:hover{border-color:var(--accent);color:var(--text)}
+/* Section tabs */
+.sec-row{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
+.sec-row::-webkit-scrollbar{display:none}
+.stab{padding:7px 14px;border:none;border-radius:7px 7px 0 0;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;font-family:inherit;transition:var(--ease)}
+.stab.on{color:var(--text);background:var(--tab-active-bg);border-bottom-color:var(--accent)}
+
+/* TOOLBAR */
+.toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px}
+.venue{font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 9px}
+.venue b{color:#22c55e}
+.vtabs{display:flex;gap:2px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:2px}
+.vt{padding:5px 12px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);font-family:inherit;transition:var(--ease)}
+.vt.on{background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff}
+
+/* DAILY WRAP */
+.dailywrap{display:flex;flex-direction:column;flex:1;overflow:hidden}
+.daynav{padding:10px 14px 8px;display:flex;align-items:center;gap:6px;flex-shrink:0;background:var(--bg)}
+.arr{width:32px;height:32px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--ease)}
+.arr:hover{border-color:var(--accent);color:var(--text)}
+.dscroll{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex:1}
+.dscroll::-webkit-scrollbar{display:none}
+.dbt{padding:5px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;text-align:center;min-width:44px;transition:var(--ease)}
+.dbt .dn{display:block;font-size:9px;color:var(--muted);margin-bottom:1px}
+.dbt.on{background:linear-gradient(135deg,var(--grad1),var(--grad2));border-color:transparent;color:#fff}
+.dbt.on .dn{color:rgba(255,255,255,.7)}
+.dbt.today-dot{position:relative}
+.dbt.today-dot::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--me-ac)}
+
+/* SCROLL AREA */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.dcontent{padding:10px 14px 24px}
+
+/* DATE HEADER */
+.dhdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.dhdr .dname{font-size:15px;font-weight:800;color:var(--text)}
+.dhdr .ddate{font-size:11px;color:var(--muted);margin-left:auto}
+.sbadge{background:var(--fra-ac);color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;margin-left:auto;white-space:nowrap}
+
+/* CLASS CARD */
+.cards{display:flex;flex-direction:column;gap:10px}
+.card{border-radius:14px;border:1px solid var(--border);overflow:hidden;position:relative}
+[data-theme="dark"] .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--grad1),var(--grad2));opacity:0;transition:opacity .2s}
+[data-theme="dark"] .card:hover::before{opacity:1}
+[data-theme="light"] .card{box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.card-main{padding:12px;display:flex;gap:10px;cursor:pointer}
+.ctm{flex-shrink:0;width:46px;text-align:center}
+.ctm .t1{font-size:9px;color:var(--muted);font-weight:600;line-height:1.4}
+.cdot{width:7px;height:7px;border-radius:50%;margin:5px auto 0}
+.cbody{flex:1;min-width:0}
+.cname{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.ccode{font-size:9px;color:var(--muted);margin-bottom:7px;font-family:monospace}
+.pills{display:flex;gap:5px;flex-wrap:wrap}
+.pill{font-size:9px;font-weight:600;padding:2px 7px;border-radius:5px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.spill{font-size:9px;font-weight:700;padding:2px 8px;border-radius:5px;border:1px solid;white-space:nowrap}
+
+/* EXPAND BTN */
+.expand-btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:8px 12px;border:none;border-top:1px solid var(--border);font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;background:transparent;transition:var(--ease)}
+.expand-btn .arrow{display:inline-block;transition:transform .25s;font-size:11px}
+.expand-btn.open .arrow{transform:rotate(180deg)}
+
+/* PRE-READS PANEL — OPTION 5 STYLE */
+.prereads{overflow:hidden;max-height:0;transition:max-height .3s ease}
+.prereads.open{max-height:600px}
+.prereads-inner{border-top:1px solid var(--border)}
+.pr-top{padding:10px 12px 8px}
+.pr-top .pr-theme{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px}
+.pr-top .pr-topics{font-size:10px;color:var(--muted);line-height:1.5}
+.pr-body{padding:8px 12px 12px}
+.pr-section-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;margin-top:10px;display:flex;align-items:center;gap:5px}
+.pr-section-lbl:first-child{margin-top:0}
+.pr-section-lbl::after{content:"";flex:1;height:1px;background:var(--border)}
+.pr-item-card{border-radius:8px;padding:8px 10px;margin-bottom:5px;border-left:3px solid;display:flex;gap:8px;align-items:flex-start}
+.pr-item-card .pr-icon{font-size:11px;flex-shrink:0;margin-top:1px}
+.pr-item-card .pr-txt{font-size:11px;line-height:1.4;font-weight:500}
+.pr-ref-row{display:flex;gap:6px;align-items:baseline;padding:3px 0}
+.pr-ref-arr{font-size:11px}
+.pr-ref-txt{font-size:10px;color:var(--muted);line-height:1.4}
+.pr-empty{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:8px;border:1px dashed var(--border)}
+.pr-empty span{font-size:11px;color:var(--muted)}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty .ei{font-size:32px;margin-bottom:8px}
+.empty p{font-size:12px}
+
+/* WEEKLY */
+.weeklywrap{display:none;flex:1;overflow:hidden;flex-direction:column}
+.wleg{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px 6px;flex-shrink:0}
+.li{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted)}
+.ld{width:7px;height:7px;border-radius:2px}
+.wwrap{overflow-x:auto;padding:0 14px 20px}
+.wtbl{border-collapse:collapse;min-width:420px;width:100%}
+.wtbl th{background:var(--surface);padding:6px 4px;font-size:9px;font-weight:700;color:var(--muted);border:1px solid var(--border);text-align:center}
+.wtbl td{border:1px solid var(--border);padding:4px;vertical-align:top;background:var(--bg);min-width:60px}
+.wtbl .dl{font-size:9px;font-weight:700;color:var(--text);background:var(--surface);text-align:center;white-space:nowrap}
+.gp{border-radius:4px;padding:2px 5px;font-size:8px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid transparent;display:block}
+.gp.sp{background:rgba(247,86,124,.15);color:var(--fra-ac);border-color:rgba(247,86,124,.25)}
+.gsn{font-size:7px;opacity:.6}
+
+/* ONBOARDING */
+.onboard{position:fixed;inset:0;background:var(--ob-bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;max-width:600px;margin:0 auto}
+.ob-logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--grad1),var(--grad2));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;box-shadow:0 8px 32px rgba(109,40,217,.3)}
+.ob-title{font-size:22px;font-weight:800;color:var(--text);text-align:center;margin-bottom:6px}
+.ob-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:36px;line-height:1.5}
+.ob-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;align-self:flex-start;width:100%}
+.ob-sections{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:32px}
+.ob-sec{padding:16px 8px;border:1px solid var(--ob-border);border-radius:12px;background:var(--ob-card);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit;transition:var(--ease)}
+.ob-sec:hover{border-color:var(--accent);color:var(--text)}
+.ob-sec.picked{background:var(--tag-bg);border-color:var(--accent);color:var(--text)}
+.ob-sec .ob-venue{display:block;font-size:9px;color:var(--muted);font-weight:500;margin-top:4px}
+.ob-sec.picked .ob-venue{color:var(--accent)}
+.ob-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--grad1),var(--grad2));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(109,40,217,.3)}
+.ob-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.ob-footer{font-size:10px;color:var(--submuted);margin-top:16px;text-align:center}
+
+/* INSTALL BANNER */
+.install-bar{background:var(--install-bg);border-bottom:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.install-bar p{font-size:11px;color:var(--muted);flex:1;line-height:1.4}
+.ibtn{background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
+.iclose{color:var(--muted);font-size:16px;cursor:pointer;padding:2px 6px;background:none;border:none}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div class="onboard" id="onboard">
+  <div class="ob-logo">IIM</div>
+  <div class="ob-title">Welcome to PGPM</div>
+  <div class="ob-sub">IIM Tiruchirappalli · 2026–2028 Batch<br>Select your section to get started</div>
+  <div class="ob-label">Your Section</div>
+  <div class="ob-sections" id="obSections"></div>
+  <button class="ob-btn" id="obBtn" disabled onclick="confirmSection()">Continue →</button>
+  <div class="ob-footer">Your choice is saved — you won't be asked again</div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div id="installBar" style="display:none" class="install-bar">
+  <p>📲 Add to home screen for offline access</p>
+  <button class="ibtn" id="installBtn">Install</button>
+  <button class="iclose" onclick="document.getElementById('installBar').style.display='none'">✕</button>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo">IIM</div>
+    <div class="hdr-info">
+      <h1>PGPM Term I · 2026–2028 Batch</h1>
+      <p>IIM Tiruchirappalli</p>
+    </div>
+    <div class="hdr-actions">
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">🌙</button>
+      <button class="change-sec" onclick="showOnboard(true)">✦ Change</button>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center">
+    <div class="sec-row" id="secRow" style="flex:1"></div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="venue">📍 <b id="venTxt">–</b></div>
+  <div class="vtabs">
+    <button class="vt on" id="vtD" onclick="setView('d')">📅 Daily</button>
+    <button class="vt" id="vtW" onclick="setView('w')">📆 Weekly</button>
+  </div>
+</div>
+
+<!-- DAILY VIEW -->
+<div class="dailywrap" id="dailyWrap">
+  <div class="daynav">
+    <button class="arr" onclick="shift(-1)">‹</button>
+    <div class="dscroll" id="dscroll"></div>
+    <button class="arr" onclick="shift(1)">›</button>
+  </div>
+  <div class="scroll" id="dailyScroll">
+    <div class="dcontent" id="dcontent"></div>
+  </div>
+</div>
+
+<!-- WEEKLY VIEW -->
+<div class="weeklywrap" id="weeklyWrap">
+  <div class="wleg" id="wleg"></div>
+  <div class="scroll">
+    <div class="wwrap"><table class="wtbl" id="wtbl"></table></div>
+  </div>
+</div>
+
+<script>
+const SCHED = [
+  ['29-06-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['29-06-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['29-06-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['29-06-2026','D',[null,'MC[SS]','ME[MS]',null,null,null]],
+  ['29-06-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['29-06-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['30-06-2026','A',['BS[VCT]','MIOB[PN]',null,null,null,null]],
+  ['30-06-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['30-06-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['30-06-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]','ME[MS]',null,null]],
+  ['30-06-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['30-06-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['01-07-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['01-07-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['01-07-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['01-07-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['01-07-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['01-07-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['02-07-2026','A',[null,'BS[VCT]','MIOB[PN]',null,null,null]],
+  ['02-07-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['02-07-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['02-07-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['02-07-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['02-07-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['03-07-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['03-07-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['03-07-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['03-07-2026','D',[null,null,'FRA[SMA]',null,null,null]],
+  ['03-07-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['03-07-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['04-07-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['05-07-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['06-07-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['06-07-2026','B',[null,'ME[VM]','FRA[NG]',null,null,null]],
+  ['06-07-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['06-07-2026','E',['BS[SMG]','MIOB[AKT]',null,null,null,null]],
+  ['06-07-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['07-07-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['07-07-2026','B',['BS[SUSH]','MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['07-07-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['07-07-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['07-07-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['07-07-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['08-07-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['08-07-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['08-07-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['08-07-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['08-07-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['08-07-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['09-07-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['09-07-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['09-07-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['09-07-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['09-07-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['09-07-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['10-07-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['10-07-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['10-07-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['10-07-2026','D',['MC[SS]','ME[MS]','FRA[SMA]',null,null,null]],
+  ['10-07-2026','E',[null,'MC[SS]','BS[SMG]',null,null,null]],
+  ['10-07-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['11-07-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['11-07-2026','E',[null,'BS[SMG]',null,null,null,null]],
+  ['11-07-2026','F',[null,null,'BS[SMG]',null,null,null]],
+  ['13-07-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['13-07-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['13-07-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['13-07-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['13-07-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['13-07-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['14-07-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['14-07-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['14-07-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['14-07-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['14-07-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['14-07-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['15-07-2026','A',['FRA[NG]','MC[RRB]','MM-I[AS]',null,null,null]],
+  ['15-07-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['15-07-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['15-07-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['15-07-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['15-07-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['16-07-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['16-07-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['16-07-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['16-07-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['16-07-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['16-07-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['17-07-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['17-07-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['17-07-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['17-07-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['17-07-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['17-07-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['18-07-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['20-07-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['20-07-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['20-07-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['20-07-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['20-07-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['20-07-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['21-07-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['21-07-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['21-07-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['21-07-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['21-07-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['21-07-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['22-07-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['22-07-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['22-07-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['22-07-2026','D',[null,'FRA[SMA]',null,null,null,null]],
+  ['22-07-2026','E',[null,null,'MIOB[AKT]',null,null,null]],
+  ['22-07-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['23-07-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['23-07-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['23-07-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['23-07-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['23-07-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['23-07-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['24-07-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['24-07-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['24-07-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['24-07-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['24-07-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['24-07-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['25-07-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['27-07-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['27-07-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['27-07-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['27-07-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['27-07-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['27-07-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['28-07-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['28-07-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['28-07-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['28-07-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['28-07-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['28-07-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['29-07-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['29-07-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['29-07-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['29-07-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['29-07-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['29-07-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['30-07-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['30-07-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['30-07-2026','C',[null,'BS[MMS]',null,null,null,null]],
+  ['30-07-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['30-07-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['30-07-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['31-07-2026','A',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['31-07-2026','B',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['31-07-2026','C',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['31-07-2026','D',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['31-07-2026','E',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['31-07-2026','F',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','A',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','B',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','C',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','D',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','E',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['01-08-2026','F',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','A',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','B',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','C',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','D',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','E',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['02-08-2026','F',['Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term','Mid-Term']],
+  ['03-08-2026','A',[null,'FRA[NG]',null,null,null,null]],
+  ['03-08-2026','B',['BS[SUSH]',null,'FRA[NG]',null,null,null]],
+  ['03-08-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['03-08-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['03-08-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['03-08-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['04-08-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['04-08-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['04-08-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['04-08-2026','D',[null,'BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['04-08-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['04-08-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['05-08-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['05-08-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['05-08-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['05-08-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['05-08-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['05-08-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['06-08-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['06-08-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['06-08-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['06-08-2026','D',['BS[MMS]',null,'MM-I[PKT]',null,null,null]],
+  ['06-08-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['06-08-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['07-08-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['07-08-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['07-08-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['07-08-2026','D',[null,null,'FRA[SMA]',null,null,null]],
+  ['07-08-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['07-08-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['10-08-2026','A',[null,null,'ME[VM]',null,null,null]],
+  ['10-08-2026','B',['BS[SUSH]','ME[VM]',null,null,null,null]],
+  ['10-08-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['10-08-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['10-08-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['10-08-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['11-08-2026','A',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['11-08-2026','B',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['11-08-2026','C',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['11-08-2026','D',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['11-08-2026','E',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['11-08-2026','F',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','A',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','B',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','C',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','D',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','E',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['12-08-2026','F',['AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP','AOL WORKSHOP']],
+  ['13-08-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['13-08-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['13-08-2026','C',['ME[VM]',null,'MC[RRB]',null,null,null]],
+  ['13-08-2026','D',[null,'MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['13-08-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['13-08-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['14-08-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['14-08-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['14-08-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['14-08-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['14-08-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['14-08-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['15-08-2026','A',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['15-08-2026','B',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['15-08-2026','C',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['15-08-2026','D',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['15-08-2026','E',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['15-08-2026','F',['Independence Day','Independence Day','Independence Day','Independence Day','Independence Day','Independence Day']],
+  ['17-08-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['17-08-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['17-08-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['17-08-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['17-08-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['17-08-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['18-08-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['18-08-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['18-08-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['18-08-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['18-08-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['18-08-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['19-08-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['19-08-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['19-08-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['19-08-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['19-08-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['19-08-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['20-08-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['20-08-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['20-08-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['20-08-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['20-08-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['20-08-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['21-08-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['21-08-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['21-08-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['21-08-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['21-08-2026','F',[null,null,'MC[TS]',null,null,null]],
+  ['22-08-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['24-08-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['24-08-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['24-08-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['24-08-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['24-08-2026','E',[null,'MIOB[AKT]','MC[SS]',null,null,null]],
+  ['24-08-2026','F',[null,null,'MIOB[AKT]',null,null,null]],
+  ['25-08-2026','A',[null,'MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['25-08-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['25-08-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['25-08-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['25-08-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['25-08-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['26-08-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['26-08-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['26-08-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['26-08-2026','D',[null,'FRA[SMA]',null,null,null,null]],
+  ['26-08-2026','E',[null,null,'MIOB[AKT]',null,null,null]],
+  ['26-08-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['27-08-2026','A',['MM-I[AS]',null,'MIOB[PN]',null,null,null]],
+  ['27-08-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['27-08-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['27-08-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['27-08-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['27-08-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['28-08-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['28-08-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['28-08-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['28-08-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['28-08-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['28-08-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['29-08-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['31-08-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['31-08-2026','B',['BS[SUSH]','ME[VM]','FRA[NG]',null,null,null]],
+  ['31-08-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['31-08-2026','D',[null,'MC[SS]',null,null,null,null]],
+  ['31-08-2026','E',['BS[SMG]','MIOB[AKT]','MC[SS]',null,null,null]],
+  ['31-08-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['01-09-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['01-09-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['01-09-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['01-09-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['01-09-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['01-09-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['02-09-2026','A',['FRA[NG]','MC[RRB]','BS[VCT]',null,null,null]],
+  ['02-09-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['02-09-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['02-09-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['02-09-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['02-09-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['03-09-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['03-09-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['03-09-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['03-09-2026','D',['BS[MMS]','MIOB[VV]','MM-I[PKT]',null,null,null]],
+  ['03-09-2026','E',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['03-09-2026','F',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['04-09-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['04-09-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['04-09-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['04-09-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['04-09-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['04-09-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['05-09-2026','D',[null,'ME[MS]',null,null,null,null]],
+  ['07-09-2026','A',[null,'FRA[NG]','ME[VM]',null,null,null]],
+  ['07-09-2026','B',[null,'ME[VM]','FRA[NG]',null,null,null]],
+  ['07-09-2026','C',[null,'MM-I[RPS]','MIOB[PN]',null,null,null]],
+  ['07-09-2026','E',['BS[SMG]','MIOB[AKT]',null,null,null,null]],
+  ['07-09-2026','F',[null,'BS[SMG]','MIOB[AKT]',null,null,null]],
+  ['08-09-2026','A',['BS[VCT]','MIOB[PN]','MM-I[AS]',null,null,null]],
+  ['08-09-2026','B',[null,'MM-I[AJS]','MIOB[PN]',null,null,null]],
+  ['08-09-2026','C',['BS[MMS]','MC[RRB]','ME[VM]',null,null,null]],
+  ['08-09-2026','D',['MIOB[VV]','BS[MMS]','MM-I[PKT]',null,null,null]],
+  ['08-09-2026','E',['MM-I[SMS]','FRA[DM]','ME[VB]',null,null,null]],
+  ['08-09-2026','F',['ME[VB]','MM-I[SMS]','FRA[DM]',null,null,null]],
+  ['09-09-2026','A',['FRA[NG]','MC[RRB]',null,null,null,null]],
+  ['09-09-2026','B',['MC[RRB]','FRA[NG]','BS[SUSH]',null,null,null]],
+  ['09-09-2026','C',['MM-I[RPS]','MIOB[PN]','FRA[SMA]',null,null,null]],
+  ['09-09-2026','D',[null,'FRA[SMA]','MC[SS]',null,null,null]],
+  ['09-09-2026','E',[null,'MC[SS]','MIOB[AKT]',null,null,null]],
+  ['09-09-2026','F',[null,'MIOB[AKT]','MC[TS]',null,null,null]],
+  ['10-09-2026','A',['MM-I[AS]','BS[VCT]','MIOB[PN]',null,null,null]],
+  ['10-09-2026','B',[null,'MIOB[PN]','MM-I[AJS]',null,null,null]],
+  ['10-09-2026','C',['ME[VM]','BS[MMS]','MC[RRB]',null,null,null]],
+  ['10-09-2026','D',['BS[MMS]','MIOB[VV]',null,null,null,null]],
+  ['10-09-2026','E',[null,'MM-I[SMS]',null,null,null,null]],
+  ['10-09-2026','F',['MM-I[SMS]',null,null,null,null,null]],
+  ['11-09-2026','A',[null,'ME[VM]','MC[RRB]',null,null,null]],
+  ['11-09-2026','B',[null,'MC[RRB]','ME[VM]',null,null,null]],
+  ['11-09-2026','C',[null,'FRA[SMA]',null,null,null,null]],
+  ['11-09-2026','D',[null,'ME[MS]','FRA[SMA]',null,null,null]],
+  ['11-09-2026','E',[null,null,'BS[SMG]',null,null,null]],
+  ['11-09-2026','F',[null,'BS[SMG]','MC[TS]',null,null,null]],
+  ['12-09-2026','A',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['12-09-2026','B',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['12-09-2026','C',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['12-09-2026','D',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['12-09-2026','E',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['12-09-2026','F',['DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA','DAKSHA']],
+  ['14-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['14-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['14-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['14-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['14-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['14-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['15-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['16-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['17-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['18-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','A',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','B',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','C',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','D',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','E',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+  ['19-09-2026','F',['End-Term','End-Term','End-Term','End-Term','End-Term','End-Term']],
+];
+const SESSION_MAP_RAW = [
+  ['01-07-2026','A',0,2],
+  ['01-07-2026','A',1,1],
+  ['01-07-2026','B',0,1],
+  ['01-07-2026','B',1,2],
+  ['01-07-2026','B',2,2],
+  ['01-07-2026','C',0,2],
+  ['01-07-2026','C',1,2],
+  ['01-07-2026','C',2,1],
+  ['01-07-2026','D',1,1],
+  ['01-07-2026','D',2,2],
+  ['01-07-2026','E',1,2],
+  ['01-07-2026','E',2,2],
+  ['01-07-2026','F',1,2],
+  ['01-07-2026','F',2,1],
+  ['01-09-2026','A',0,16],
+  ['01-09-2026','A',1,18],
+  ['01-09-2026','A',2,17],
+  ['01-09-2026','B',1,18],
+  ['01-09-2026','B',2,18],
+  ['01-09-2026','C',0,17],
+  ['01-09-2026','C',1,17],
+  ['01-09-2026','C',2,17],
+  ['01-09-2026','D',0,16],
+  ['01-09-2026','D',1,17],
+  ['01-09-2026','D',2,18],
+  ['01-09-2026','E',0,18],
+  ['01-09-2026','E',1,18],
+  ['01-09-2026','E',2,18],
+  ['01-09-2026','F',0,18],
+  ['01-09-2026','F',1,18],
+  ['01-09-2026','F',2,18],
+  ['02-07-2026','A',1,2],
+  ['02-07-2026','A',2,2],
+  ['02-07-2026','B',1,2],
+  ['02-07-2026','B',2,2],
+  ['02-07-2026','C',0,2],
+  ['02-07-2026','C',1,2],
+  ['02-07-2026','C',2,2],
+  ['02-07-2026','D',0,2],
+  ['02-07-2026','D',1,2],
+  ['02-07-2026','D',2,2],
+  ['02-07-2026','E',0,2],
+  ['02-07-2026','E',1,2],
+  ['02-07-2026','E',2,2],
+  ['02-07-2026','F',0,2],
+  ['02-07-2026','F',1,2],
+  ['02-07-2026','F',2,2],
+  ['02-09-2026','A',0,18],
+  ['02-09-2026','A',1,17],
+  ['02-09-2026','A',2,17],
+  ['02-09-2026','B',0,17],
+  ['02-09-2026','B',1,18],
+  ['02-09-2026','B',2,19],
+  ['02-09-2026','C',0,19],
+  ['02-09-2026','C',1,19],
+  ['02-09-2026','C',2,17],
+  ['02-09-2026','D',1,17],
+  ['02-09-2026','D',2,17],
+  ['02-09-2026','E',1,17],
+  ['02-09-2026','E',2,19],
+  ['02-09-2026','F',1,19],
+  ['02-09-2026','F',2,17],
+  ['03-07-2026','A',1,2],
+  ['03-07-2026','A',2,2],
+  ['03-07-2026','B',1,2],
+  ['03-07-2026','B',2,2],
+  ['03-07-2026','C',1,2],
+  ['03-07-2026','D',2,2],
+  ['03-07-2026','E',2,2],
+  ['03-07-2026','F',1,2],
+  ['03-07-2026','F',2,2],
+  ['03-08-2026','A',1,11],
+  ['03-08-2026','B',0,11],
+  ['03-08-2026','B',2,11],
+  ['03-08-2026','C',1,11],
+  ['03-08-2026','C',2,11],
+  ['03-08-2026','D',1,10],
+  ['03-08-2026','E',0,11],
+  ['03-08-2026','E',1,11],
+  ['03-08-2026','E',2,10],
+  ['03-08-2026','F',1,11],
+  ['03-08-2026','F',2,11],
+  ['03-09-2026','A',0,18],
+  ['03-09-2026','A',1,18],
+  ['03-09-2026','A',2,19],
+  ['03-09-2026','B',1,19],
+  ['03-09-2026','B',2,19],
+  ['03-09-2026','C',0,18],
+  ['03-09-2026','C',1,18],
+  ['03-09-2026','C',2,18],
+  ['03-09-2026','D',0,18],
+  ['03-09-2026','D',1,17],
+  ['03-09-2026','D',2,19],
+  ['03-09-2026','E',0,19],
+  ['03-09-2026','E',1,19],
+  ['03-09-2026','E',2,19],
+  ['03-09-2026','F',0,19],
+  ['03-09-2026','F',1,19],
+  ['03-09-2026','F',2,19],
+  ['04-07-2026','D',1,3],
+  ['04-08-2026','A',0,11],
+  ['04-08-2026','A',1,11],
+  ['04-08-2026','A',2,10],
+  ['04-08-2026','B',1,11],
+  ['04-08-2026','B',2,11],
+  ['04-08-2026','C',0,11],
+  ['04-08-2026','C',1,10],
+  ['04-08-2026','C',2,10],
+  ['04-08-2026','D',1,11],
+  ['04-08-2026','D',2,11],
+  ['04-08-2026','E',0,11],
+  ['04-08-2026','E',1,11],
+  ['04-08-2026','E',2,11],
+  ['04-08-2026','F',0,11],
+  ['04-08-2026','F',1,11],
+  ['04-08-2026','F',2,11],
+  ['04-09-2026','A',1,18],
+  ['04-09-2026','A',2,18],
+  ['04-09-2026','B',1,18],
+  ['04-09-2026','B',2,18],
+  ['04-09-2026','C',1,18],
+  ['04-09-2026','D',1,16],
+  ['04-09-2026','D',2,18],
+  ['04-09-2026','E',2,18],
+  ['04-09-2026','F',1,18],
+  ['04-09-2026','F',2,18],
+  ['05-07-2026','D',1,4],
+  ['05-08-2026','A',0,12],
+  ['05-08-2026','A',1,10],
+  ['05-08-2026','B',0,10],
+  ['05-08-2026','B',1,12],
+  ['05-08-2026','B',2,12],
+  ['05-08-2026','C',0,12],
+  ['05-08-2026','C',1,12],
+  ['05-08-2026','C',2,10],
+  ['05-08-2026','D',1,10],
+  ['05-08-2026','D',2,11],
+  ['05-08-2026','E',1,11],
+  ['05-08-2026','E',2,12],
+  ['05-08-2026','F',1,12],
+  ['05-08-2026','F',2,10],
+  ['05-09-2026','D',1,17],
+  ['06-07-2026','A',1,3],
+  ['06-07-2026','A',2,3],
+  ['06-07-2026','B',1,3],
+  ['06-07-2026','B',2,3],
+  ['06-07-2026','C',1,3],
+  ['06-07-2026','C',2,3],
+  ['06-07-2026','E',0,3],
+  ['06-07-2026','E',1,3],
+  ['06-07-2026','F',1,3],
+  ['06-07-2026','F',2,3],
+  ['06-08-2026','A',0,11],
+  ['06-08-2026','A',1,12],
+  ['06-08-2026','A',2,12],
+  ['06-08-2026','B',1,12],
+  ['06-08-2026','B',2,12],
+  ['06-08-2026','C',0,11],
+  ['06-08-2026','C',1,12],
+  ['06-08-2026','C',2,11],
+  ['06-08-2026','D',0,12],
+  ['06-08-2026','D',2,12],
+  ['06-08-2026','E',0,12],
+  ['06-08-2026','E',1,12],
+  ['06-08-2026','E',2,12],
+  ['06-08-2026','F',0,12],
+  ['06-08-2026','F',1,12],
+  ['06-08-2026','F',2,12],
+  ['07-07-2026','A',0,3],
+  ['07-07-2026','A',1,3],
+  ['07-07-2026','A',2,1],
+  ['07-07-2026','B',0,3],
+  ['07-07-2026','B',1,3],
+  ['07-07-2026','B',2,3],
+  ['07-07-2026','C',0,3],
+  ['07-07-2026','C',1,3],
+  ['07-07-2026','C',2,3],
+  ['07-07-2026','D',0,3],
+  ['07-07-2026','D',1,3],
+  ['07-07-2026','D',2,3],
+  ['07-07-2026','E',0,3],
+  ['07-07-2026','E',1,3],
+  ['07-07-2026','E',2,3],
+  ['07-07-2026','F',0,3],
+  ['07-07-2026','F',1,3],
+  ['07-07-2026','F',2,3],
+  ['07-08-2026','A',1,10],
+  ['07-08-2026','A',2,11],
+  ['07-08-2026','B',1,11],
+  ['07-08-2026','B',2,10],
+  ['07-08-2026','C',1,11],
+  ['07-08-2026','D',2,11],
+  ['07-08-2026','E',2,12],
+  ['07-08-2026','F',1,12],
+  ['07-08-2026','F',2,11],
+  ['07-09-2026','A',1,19],
+  ['07-09-2026','A',2,19],
+  ['07-09-2026','B',1,19],
+  ['07-09-2026','B',2,19],
+  ['07-09-2026','C',1,20],
+  ['07-09-2026','C',2,20],
+  ['07-09-2026','E',0,19],
+  ['07-09-2026','E',1,20],
+  ['07-09-2026','F',1,19],
+  ['07-09-2026','F',2,20],
+  ['08-07-2026','A',0,4],
+  ['08-07-2026','A',1,3],
+  ['08-07-2026','B',0,3],
+  ['08-07-2026','B',1,4],
+  ['08-07-2026','B',2,4],
+  ['08-07-2026','C',0,4],
+  ['08-07-2026','C',1,4],
+  ['08-07-2026','C',2,3],
+  ['08-07-2026','D',1,3],
+  ['08-07-2026','D',2,3],
+  ['08-07-2026','E',1,3],
+  ['08-07-2026','E',2,4],
+  ['08-07-2026','F',1,4],
+  ['08-07-2026','F',2,3],
+  ['08-09-2026','A',0,19],
+  ['08-09-2026','A',1,20],
+  ['08-09-2026','A',2,19],
+  ['08-09-2026','B',1,20],
+  ['08-09-2026','B',2,20],
+  ['08-09-2026','C',0,19],
+  ['08-09-2026','C',1,19],
+  ['08-09-2026','C',2,19],
+  ['08-09-2026','D',0,18],
+  ['08-09-2026','D',1,19],
+  ['08-09-2026','D',2,20],
+  ['08-09-2026','E',0,20],
+  ['08-09-2026','E',1,20],
+  ['08-09-2026','E',2,20],
+  ['08-09-2026','F',0,20],
+  ['08-09-2026','F',1,20],
+  ['08-09-2026','F',2,20],
+  ['09-07-2026','A',0,2],
+  ['09-07-2026','A',1,4],
+  ['09-07-2026','A',2,4],
+  ['09-07-2026','B',1,4],
+  ['09-07-2026','B',2,4],
+  ['09-07-2026','C',0,4],
+  ['09-07-2026','C',1,4],
+  ['09-07-2026','C',2,4],
+  ['09-07-2026','D',0,4],
+  ['09-07-2026','D',1,4],
+  ['09-07-2026','D',2,4],
+  ['09-07-2026','E',0,4],
+  ['09-07-2026','E',1,4],
+  ['09-07-2026','E',2,4],
+  ['09-07-2026','F',0,4],
+  ['09-07-2026','F',1,4],
+  ['09-07-2026','F',2,4],
+  ['09-09-2026','A',0,20],
+  ['09-09-2026','A',1,19],
+  ['09-09-2026','B',0,19],
+  ['09-09-2026','B',1,20],
+  ['09-09-2026','B',2,20],
+  ['09-09-2026','C',0,21],
+  ['09-09-2026','C',1,21],
+  ['09-09-2026','C',2,19],
+  ['09-09-2026','D',1,19],
+  ['09-09-2026','D',2,18],
+  ['09-09-2026','E',1,18],
+  ['09-09-2026','E',2,21],
+  ['09-09-2026','F',1,21],
+  ['09-09-2026','F',2,19],
+  ['10-07-2026','A',1,4],
+  ['10-07-2026','A',2,4],
+  ['10-07-2026','B',1,4],
+  ['10-07-2026','B',2,4],
+  ['10-07-2026','C',1,4],
+  ['10-07-2026','D',0,4],
+  ['10-07-2026','D',1,5],
+  ['10-07-2026','D',2,4],
+  ['10-07-2026','E',1,4],
+  ['10-07-2026','E',2,4],
+  ['10-07-2026','F',1,4],
+  ['10-07-2026','F',2,4],
+  ['10-08-2026','A',2,11],
+  ['10-08-2026','B',0,13],
+  ['10-08-2026','B',1,11],
+  ['10-08-2026','C',1,13],
+  ['10-08-2026','C',2,13],
+  ['10-08-2026','D',1,12],
+  ['10-08-2026','E',0,13],
+  ['10-08-2026','E',1,13],
+  ['10-08-2026','E',2,12],
+  ['10-08-2026','F',1,13],
+  ['10-08-2026','F',2,13],
+  ['10-09-2026','A',0,20],
+  ['10-09-2026','A',1,20],
+  ['10-09-2026','A',2,21],
+  ['10-09-2026','B',1,21],
+  ['10-09-2026','B',2,21],
+  ['10-09-2026','C',0,20],
+  ['10-09-2026','C',1,20],
+  ['10-09-2026','C',2,20],
+  ['10-09-2026','D',0,20],
+  ['10-09-2026','D',1,19],
+  ['10-09-2026','E',1,21],
+  ['10-09-2026','F',0,21],
+  ['11-07-2026','D',1,6],
+  ['11-07-2026','E',1,5],
+  ['11-07-2026','F',2,5],
+  ['11-09-2026','A',1,20],
+  ['11-09-2026','A',2,20],
+  ['11-09-2026','B',1,20],
+  ['11-09-2026','B',2,20],
+  ['11-09-2026','C',1,20],
+  ['11-09-2026','D',1,18],
+  ['11-09-2026','D',2,20],
+  ['11-09-2026','E',2,20],
+  ['11-09-2026','F',1,20],
+  ['11-09-2026','F',2,20],
+  ['13-07-2026','A',1,5],
+  ['13-07-2026','A',2,5],
+  ['13-07-2026','B',0,5],
+  ['13-07-2026','B',1,5],
+  ['13-07-2026','B',2,5],
+  ['13-07-2026','C',1,5],
+  ['13-07-2026','C',2,5],
+  ['13-07-2026','D',1,5],
+  ['13-07-2026','E',0,6],
+  ['13-07-2026','E',1,5],
+  ['13-07-2026','E',2,5],
+  ['13-07-2026','F',1,6],
+  ['13-07-2026','F',2,5],
+  ['13-08-2026','A',0,12],
+  ['13-08-2026','A',1,13],
+  ['13-08-2026','A',2,13],
+  ['13-08-2026','B',1,13],
+  ['13-08-2026','B',2,13],
+  ['13-08-2026','C',0,12],
+  ['13-08-2026','C',2,12],
+  ['13-08-2026','D',1,11],
+  ['13-08-2026','D',2,13],
+  ['13-08-2026','E',0,13],
+  ['13-08-2026','E',1,13],
+  ['13-08-2026','E',2,13],
+  ['13-08-2026','F',0,13],
+  ['13-08-2026','F',1,13],
+  ['13-08-2026','F',2,13],
+  ['14-07-2026','A',0,5],
+  ['14-07-2026','A',1,5],
+  ['14-07-2026','A',2,3],
+  ['14-07-2026','B',1,5],
+  ['14-07-2026','B',2,5],
+  ['14-07-2026','C',0,5],
+  ['14-07-2026','C',1,5],
+  ['14-07-2026','C',2,5],
+  ['14-07-2026','D',0,5],
+  ['14-07-2026','D',1,5],
+  ['14-07-2026','D',2,5],
+  ['14-07-2026','E',0,5],
+  ['14-07-2026','E',1,5],
+  ['14-07-2026','E',2,5],
+  ['14-07-2026','F',0,5],
+  ['14-07-2026','F',1,5],
+  ['14-07-2026','F',2,5],
+  ['14-08-2026','A',1,12],
+  ['14-08-2026','A',2,12],
+  ['14-08-2026','B',1,12],
+  ['14-08-2026','B',2,12],
+  ['14-08-2026','C',1,12],
+  ['14-08-2026','D',1,11],
+  ['14-08-2026','D',2,12],
+  ['14-08-2026','E',2,14],
+  ['14-08-2026','F',1,14],
+  ['14-08-2026','F',2,12],
+  ['15-07-2026','A',0,6],
+  ['15-07-2026','A',1,5],
+  ['15-07-2026','A',2,4],
+  ['15-07-2026','B',0,5],
+  ['15-07-2026','B',1,6],
+  ['15-07-2026','B',2,6],
+  ['15-07-2026','C',0,6],
+  ['15-07-2026','C',1,6],
+  ['15-07-2026','C',2,5],
+  ['15-07-2026','D',1,5],
+  ['15-07-2026','D',2,6],
+  ['15-07-2026','E',1,6],
+  ['15-07-2026','E',2,6],
+  ['15-07-2026','F',1,6],
+  ['15-07-2026','F',2,5],
+  ['16-07-2026','A',0,5],
+  ['16-07-2026','A',1,6],
+  ['16-07-2026','A',2,6],
+  ['16-07-2026','B',1,6],
+  ['16-07-2026','B',2,6],
+  ['16-07-2026','C',0,6],
+  ['16-07-2026','C',1,6],
+  ['16-07-2026','C',2,6],
+  ['16-07-2026','D',0,6],
+  ['16-07-2026','D',1,6],
+  ['16-07-2026','D',2,6],
+  ['16-07-2026','E',0,6],
+  ['16-07-2026','E',1,6],
+  ['16-07-2026','E',2,6],
+  ['16-07-2026','F',0,6],
+  ['16-07-2026','F',1,6],
+  ['16-07-2026','F',2,6],
+  ['17-07-2026','A',1,6],
+  ['17-07-2026','A',2,6],
+  ['17-07-2026','B',1,6],
+  ['17-07-2026','B',2,6],
+  ['17-07-2026','C',1,6],
+  ['17-07-2026','D',1,7],
+  ['17-07-2026','D',2,6],
+  ['17-07-2026','E',2,7],
+  ['17-07-2026','F',1,7],
+  ['17-07-2026','F',2,6],
+  ['17-08-2026','A',1,13],
+  ['17-08-2026','A',2,13],
+  ['17-08-2026','B',0,14],
+  ['17-08-2026','B',1,13],
+  ['17-08-2026','B',2,13],
+  ['17-08-2026','C',1,14],
+  ['17-08-2026','C',2,14],
+  ['17-08-2026','D',1,13],
+  ['17-08-2026','E',0,15],
+  ['17-08-2026','E',1,14],
+  ['17-08-2026','E',2,13],
+  ['17-08-2026','F',1,15],
+  ['17-08-2026','F',2,14],
+  ['18-07-2026','D',1,8],
+  ['18-08-2026','A',0,14],
+  ['18-08-2026','A',1,14],
+  ['18-08-2026','A',2,13],
+  ['18-08-2026','B',1,14],
+  ['18-08-2026','B',2,14],
+  ['18-08-2026','C',0,13],
+  ['18-08-2026','C',1,13],
+  ['18-08-2026','C',2,13],
+  ['18-08-2026','D',0,12],
+  ['18-08-2026','D',1,13],
+  ['18-08-2026','D',2,14],
+  ['18-08-2026','E',0,14],
+  ['18-08-2026','E',1,14],
+  ['18-08-2026','E',2,14],
+  ['18-08-2026','F',0,14],
+  ['18-08-2026','F',1,14],
+  ['18-08-2026','F',2,14],
+  ['19-08-2026','A',0,14],
+  ['19-08-2026','A',1,13],
+  ['19-08-2026','B',0,13],
+  ['19-08-2026','B',1,14],
+  ['19-08-2026','B',2,15],
+  ['19-08-2026','C',0,15],
+  ['19-08-2026','C',1,15],
+  ['19-08-2026','C',2,13],
+  ['19-08-2026','D',1,13],
+  ['19-08-2026','D',2,14],
+  ['19-08-2026','E',1,14],
+  ['19-08-2026','E',2,15],
+  ['19-08-2026','F',1,15],
+  ['19-08-2026','F',2,13],
+  ['20-07-2026','A',1,7],
+  ['20-07-2026','A',2,7],
+  ['20-07-2026','B',0,7],
+  ['20-07-2026','B',1,7],
+  ['20-07-2026','B',2,7],
+  ['20-07-2026','C',1,7],
+  ['20-07-2026','C',2,7],
+  ['20-07-2026','D',1,7],
+  ['20-07-2026','E',0,8],
+  ['20-07-2026','E',1,7],
+  ['20-07-2026','E',2,7],
+  ['20-07-2026','F',1,8],
+  ['20-07-2026','F',2,7],
+  ['20-08-2026','A',0,14],
+  ['20-08-2026','A',1,15],
+  ['20-08-2026','A',2,15],
+  ['20-08-2026','B',1,15],
+  ['20-08-2026','B',2,15],
+  ['20-08-2026','C',0,14],
+  ['20-08-2026','C',1,14],
+  ['20-08-2026','C',2,14],
+  ['20-08-2026','D',0,14],
+  ['20-08-2026','D',1,13],
+  ['20-08-2026','D',2,15],
+  ['20-08-2026','E',0,15],
+  ['20-08-2026','E',1,15],
+  ['20-08-2026','E',2,15],
+  ['20-08-2026','F',0,15],
+  ['20-08-2026','F',1,15],
+  ['20-08-2026','F',2,15],
+  ['21-07-2026','A',0,7],
+  ['21-07-2026','A',1,7],
+  ['21-07-2026','A',2,6],
+  ['21-07-2026','B',1,7],
+  ['21-07-2026','B',2,7],
+  ['21-07-2026','C',0,7],
+  ['21-07-2026','C',1,7],
+  ['21-07-2026','C',2,7],
+  ['21-07-2026','D',0,7],
+  ['21-07-2026','D',1,7],
+  ['21-07-2026','D',2,7],
+  ['21-07-2026','E',0,7],
+  ['21-07-2026','E',1,7],
+  ['21-07-2026','E',2,7],
+  ['21-07-2026','F',0,7],
+  ['21-07-2026','F',1,7],
+  ['21-07-2026','F',2,7],
+  ['21-08-2026','A',1,14],
+  ['21-08-2026','A',2,14],
+  ['21-08-2026','B',1,14],
+  ['21-08-2026','B',2,14],
+  ['21-08-2026','C',1,14],
+  ['21-08-2026','D',1,12],
+  ['21-08-2026','D',2,14],
+  ['21-08-2026','F',2,14],
+  ['22-07-2026','A',0,8],
+  ['22-07-2026','A',1,7],
+  ['22-07-2026','B',0,7],
+  ['22-07-2026','B',1,8],
+  ['22-07-2026','B',2,8],
+  ['22-07-2026','C',0,8],
+  ['22-07-2026','C',1,8],
+  ['22-07-2026','C',2,7],
+  ['22-07-2026','D',1,7],
+  ['22-07-2026','E',2,8],
+  ['22-07-2026','F',1,8],
+  ['22-07-2026','F',2,7],
+  ['22-08-2026','D',1,13],
+  ['23-07-2026','A',0,7],
+  ['23-07-2026','A',1,8],
+  ['23-07-2026','A',2,8],
+  ['23-07-2026','B',1,8],
+  ['23-07-2026','B',2,8],
+  ['23-07-2026','C',0,8],
+  ['23-07-2026','C',1,8],
+  ['23-07-2026','C',2,8],
+  ['23-07-2026','D',0,8],
+  ['23-07-2026','D',1,8],
+  ['23-07-2026','D',2,8],
+  ['23-07-2026','E',0,8],
+  ['23-07-2026','E',1,8],
+  ['23-07-2026','E',2,8],
+  ['23-07-2026','F',0,8],
+  ['23-07-2026','F',1,8],
+  ['23-07-2026','F',2,8],
+  ['24-07-2026','A',1,8],
+  ['24-07-2026','A',2,8],
+  ['24-07-2026','B',1,8],
+  ['24-07-2026','B',2,8],
+  ['24-07-2026','C',1,8],
+  ['24-07-2026','D',1,9],
+  ['24-07-2026','D',2,8],
+  ['24-07-2026','E',2,9],
+  ['24-07-2026','F',1,9],
+  ['24-07-2026','F',2,8],
+  ['24-08-2026','A',1,15],
+  ['24-08-2026','A',2,15],
+  ['24-08-2026','B',0,16],
+  ['24-08-2026','B',1,15],
+  ['24-08-2026','B',2,15],
+  ['24-08-2026','C',1,16],
+  ['24-08-2026','C',2,16],
+  ['24-08-2026','D',1,15],
+  ['24-08-2026','E',1,16],
+  ['24-08-2026','E',2,15],
+  ['24-08-2026','F',2,16],
+  ['25-07-2026','D',1,10],
+  ['25-08-2026','A',1,16],
+  ['25-08-2026','A',2,15],
+  ['25-08-2026','B',1,16],
+  ['25-08-2026','B',2,16],
+  ['25-08-2026','C',0,15],
+  ['25-08-2026','C',1,15],
+  ['25-08-2026','C',2,15],
+  ['25-08-2026','D',0,14],
+  ['25-08-2026','D',1,15],
+  ['25-08-2026','D',2,16],
+  ['25-08-2026','E',0,16],
+  ['25-08-2026','E',1,16],
+  ['25-08-2026','E',2,16],
+  ['25-08-2026','F',0,16],
+  ['25-08-2026','F',1,16],
+  ['25-08-2026','F',2,16],
+  ['26-08-2026','A',0,16],
+  ['26-08-2026','A',1,15],
+  ['26-08-2026','B',0,15],
+  ['26-08-2026','B',1,16],
+  ['26-08-2026','B',2,17],
+  ['26-08-2026','C',0,17],
+  ['26-08-2026','C',1,17],
+  ['26-08-2026','C',2,15],
+  ['26-08-2026','D',1,15],
+  ['26-08-2026','E',2,17],
+  ['26-08-2026','F',1,17],
+  ['26-08-2026','F',2,15],
+  ['27-07-2026','A',1,9],
+  ['27-07-2026','A',2,9],
+  ['27-07-2026','B',0,9],
+  ['27-07-2026','B',1,9],
+  ['27-07-2026','B',2,9],
+  ['27-07-2026','C',1,9],
+  ['27-07-2026','C',2,9],
+  ['27-07-2026','D',1,8],
+  ['27-07-2026','E',0,10],
+  ['27-07-2026','E',1,9],
+  ['27-07-2026','E',2,8],
+  ['27-07-2026','F',1,10],
+  ['27-07-2026','F',2,9],
+  ['27-08-2026','A',0,16],
+  ['27-08-2026','A',2,17],
+  ['27-08-2026','B',1,17],
+  ['27-08-2026','B',2,17],
+  ['27-08-2026','C',0,16],
+  ['27-08-2026','C',1,16],
+  ['27-08-2026','C',2,16],
+  ['27-08-2026','D',0,16],
+  ['27-08-2026','D',1,15],
+  ['27-08-2026','D',2,17],
+  ['27-08-2026','E',0,17],
+  ['27-08-2026','E',1,17],
+  ['27-08-2026','E',2,17],
+  ['27-08-2026','F',0,17],
+  ['27-08-2026','F',1,17],
+  ['27-08-2026','F',2,17],
+  ['28-07-2026','A',0,9],
+  ['28-07-2026','A',1,9],
+  ['28-07-2026','A',2,8],
+  ['28-07-2026','B',1,9],
+  ['28-07-2026','B',2,9],
+  ['28-07-2026','C',0,9],
+  ['28-07-2026','C',1,9],
+  ['28-07-2026','C',2,9],
+  ['28-07-2026','D',0,9],
+  ['28-07-2026','D',1,9],
+  ['28-07-2026','D',2,9],
+  ['28-07-2026','E',0,9],
+  ['28-07-2026','E',1,9],
+  ['28-07-2026','E',2,9],
+  ['28-07-2026','F',0,9],
+  ['28-07-2026','F',1,9],
+  ['28-07-2026','F',2,9],
+  ['28-08-2026','A',1,16],
+  ['28-08-2026','A',2,16],
+  ['28-08-2026','B',1,16],
+  ['28-08-2026','B',2,16],
+  ['28-08-2026','C',1,16],
+  ['28-08-2026','D',1,14],
+  ['28-08-2026','D',2,16],
+  ['28-08-2026','E',2,16],
+  ['28-08-2026','F',1,16],
+  ['28-08-2026','F',2,16],
+  ['29-06-2026','A',1,1],
+  ['29-06-2026','A',2,1],
+  ['29-06-2026','B',0,1],
+  ['29-06-2026','B',1,1],
+  ['29-06-2026','B',2,1],
+  ['29-06-2026','C',1,1],
+  ['29-06-2026','C',2,1],
+  ['29-06-2026','D',1,1],
+  ['29-06-2026','D',2,1],
+  ['29-06-2026','E',0,1],
+  ['29-06-2026','E',1,1],
+  ['29-06-2026','E',2,1],
+  ['29-06-2026','F',1,1],
+  ['29-06-2026','F',2,1],
+  ['29-07-2026','A',0,10],
+  ['29-07-2026','A',1,9],
+  ['29-07-2026','B',0,9],
+  ['29-07-2026','B',1,10],
+  ['29-07-2026','B',2,10],
+  ['29-07-2026','C',0,10],
+  ['29-07-2026','C',1,10],
+  ['29-07-2026','C',2,9],
+  ['29-07-2026','D',1,9],
+  ['29-07-2026','D',2,9],
+  ['29-07-2026','E',1,9],
+  ['29-07-2026','E',2,10],
+  ['29-07-2026','F',1,10],
+  ['29-07-2026','F',2,9],
+  ['29-08-2026','D',1,15],
+  ['30-06-2026','A',0,1],
+  ['30-06-2026','A',1,1],
+  ['30-06-2026','B',1,1],
+  ['30-06-2026','B',2,1],
+  ['30-06-2026','C',0,1],
+  ['30-06-2026','C',1,1],
+  ['30-06-2026','C',2,1],
+  ['30-06-2026','D',0,1],
+  ['30-06-2026','D',1,1],
+  ['30-06-2026','D',2,1],
+  ['30-06-2026','D',3,2],
+  ['30-06-2026','E',0,1],
+  ['30-06-2026','E',1,1],
+  ['30-06-2026','E',2,1],
+  ['30-06-2026','F',0,1],
+  ['30-06-2026','F',1,1],
+  ['30-06-2026','F',2,1],
+  ['30-07-2026','A',0,9],
+  ['30-07-2026','A',1,10],
+  ['30-07-2026','A',2,10],
+  ['30-07-2026','B',1,10],
+  ['30-07-2026','B',2,10],
+  ['30-07-2026','C',1,10],
+  ['30-07-2026','D',0,10],
+  ['30-07-2026','D',1,10],
+  ['30-07-2026','D',2,10],
+  ['30-07-2026','E',0,10],
+  ['30-07-2026','E',1,10],
+  ['30-07-2026','E',2,10],
+  ['30-07-2026','F',0,10],
+  ['30-07-2026','F',1,10],
+  ['30-07-2026','F',2,10],
+  ['31-08-2026','A',1,17],
+  ['31-08-2026','A',2,17],
+  ['31-08-2026','B',0,18],
+  ['31-08-2026','B',1,17],
+  ['31-08-2026','B',2,17],
+  ['31-08-2026','C',1,18],
+  ['31-08-2026','C',2,18],
+  ['31-08-2026','D',1,16],
+  ['31-08-2026','E',0,17],
+  ['31-08-2026','E',1,18],
+  ['31-08-2026','E',2,16],
+  ['31-08-2026','F',1,17],
+  ['31-08-2026','F',2,18]
+];
+const PREREADS = {
+  MIOB: {
+    1:  { theme: "Introduction to Organizations and OB", topics: "Changing trends in Organisations, Diversity, History of OB, Units of Analysis in OB", prereads: ["Amaze Auto Limited: The Fairness Conundrum [423-0121-1]", "Bridging the two worlds – The Organizational Dilemma"], refs: ["Chapters 1, 2", "Shifting from Star Performer to Star Manager [HBR, 2015]", "Additional Reading: History of OB"] },
+    2:  { theme: "Self & Personality", topics: "Self, Self-esteem and Self-efficacy, Core-self Evaluation, Personality: Trait and Type Approach, Person-Job Fit", prereads: ["Activity sheet will be shared before the session"], refs: ["Chapter 4", "Self-Awareness Can Help Leaders [HBR, 2018]"] },
+    3:  { theme: "Self & Personality (contd.)", topics: "Self, Self-esteem and Self-efficacy, Core-self Evaluation, Personality: Trait and Type Approach, Person-Job Fit", prereads: ["Activity sheet will be shared before the session"], refs: ["Chapter 4", "Self-Awareness Can Help Leaders [HBR, 2018]"] },
+    4:  { theme: "Attitudes and Values", topics: "Values: Instrumental and Terminal, Schwartz value framework, Attitude change, Job Attitude – Antecedents and consequences (ELVN) of Job Satisfaction", prereads: ["Just clean your hands! [W12302]"], refs: ["Chapters 3, 4"] },
+    5:  { theme: "Perception", topics: "Perceptual organisation, Gestalt Principles, Attribution Theory, Attribution Error, Social Perception, Impression Management", prereads: ["Growing Managers: Moving from Team Member to Team Leader [KEL629]"], refs: ["Chapter 5", "Delusions of Success: How Optimism Undermines Executives' Decisions? [HBR, 2003]"] },
+    6:  { theme: "Perception (contd.)", topics: "Perceptual organisation, Gestalt Principles, Attribution Theory, Attribution Error, Social Perception, Impression Management", prereads: ["Growing Managers: Moving from Team Member to Team Leader [KEL629]"], refs: ["Chapter 5", "Delusions of Success: How Optimism Undermines Executives' Decisions? [HBR, 2003]"] },
+    7:  { theme: "Emotions", topics: "Affective Events Theory, Emotional Labour, Emotional Intelligence", prereads: ["People First Inc: A Star Employee but a Terrible Manager [W20780]"], refs: ["Chapters 6, 16"] },
+    8:  { theme: "Learning & Motivation", topics: "Classical conditioning, Operant conditioning, Social Learning; Intrinsic Extrinsic Motivation, Theories of Motivation", prereads: ["Luthra Engineering Industries: Dealing With A Crisis [W34970]"], refs: ["Chapters 5, 7, 8", "On the folly of rewarding A while hoping for B [An Academy Classic, 1995]"] },
+    9:  { theme: "Learning & Motivation (contd.)", topics: "Classical conditioning, Operant conditioning, Social Learning; Intrinsic Extrinsic Motivation, Theories of Motivation", prereads: ["Luthra Engineering Industries: Dealing With A Crisis [W34970]"], refs: ["Chapters 5, 7, 8", "On the folly of rewarding A while hoping for B [An Academy Classic, 1995]"] },
+    10: { theme: "Interpersonal Effectiveness", topics: "Verbal and non-verbal communication, Electronic communication, FIRO B, Transactional Analysis, JoHari Window", prereads: ["Please stop working so hard! [909C20]"], refs: ["Building effective one-on-one work relationships [HBR, 1996]"] },
+    11: { theme: "Interpersonal Effectiveness (contd.)", topics: "Verbal and non-verbal communication, Electronic communication, FIRO B, Transactional Analysis, JoHari Window", prereads: ["Please stop working so hard! [909C20]"], refs: ["Building effective one-on-one work relationships [HBR, 1996]"] },
+    12: { theme: "Groups and Teams", topics: "Social Identity Theory, Stages of group development, Group properties, Psychological safety, Team effectiveness model", prereads: ["Managing a Global Team: Greg James at Sun Microsystems, Inc. (A) [409003]"], refs: ["Chapters 9, 10"] },
+    13: { theme: "Individual and Group Decision Making", topics: "Biases in decision-making", prereads: ["In-class Activity"], refs: ["Chapter 5"] },
+    14: { theme: "Conflict and Negotiation", topics: "Types of conflict, Antecedent and Consequences, Bargaining Strategies", prereads: ["In-class Activity"], refs: ["Chapter 17"] },
+    15: { theme: "Power and Politics", topics: "Bases of Power, Power Tactics, Managing political behaviour in organizations", prereads: ["Thomas Green: Power, Office Politics, and a Career in Crisis [2095]"], refs: ["Chapter 11"] },
+    16: { theme: "Leadership", topics: "Theories of Leadership: Trait, Behavioural, Contingency, Contemporary Discussions (Glass Ceiling, Women in Leadership)", prereads: ["VDart Inc.: Leadership Challenges During Growth [NA0861]"], refs: ["Chapter 13, 15"] },
+    17: { theme: "Leadership (contd.)", topics: "Theories of Leadership: Trait, Behavioural, Contingency, Contemporary Discussions (Glass Ceiling, Women in Leadership)", prereads: ["VDart Inc.: Leadership Challenges During Growth [NA0861]"], refs: ["Chapter 13, 15"] },
+    18: { theme: "Stress and Well-being", topics: "General Adaptation Syndrome, Managing Stress", prereads: ["Goldman Sachs: Are You Burnt-In or Burnt-Out? [W28432]"], refs: ["Chapter 17"] },
+    19: { theme: "Guest Lecture(s)", topics: "Managing Different Types of People; Balancing people and performance; Role of diversity and culture in organizations", prereads: ["Guest Lecture – no pre-reads assigned"], refs: [] },
+    20: { theme: "Guest Lecture(s)", topics: "Managing Different Types of People; Balancing people and performance; Role of diversity and culture in organizations", prereads: ["Guest Lecture – no pre-reads assigned"], refs: [] }
+  },
+  FRA: {
+    1:  { theme: "Introduction to the Course", topics: "Introduction to the Course, Basic ground rules: concepts and conventions, How does a published annual report look like?", prereads: ["Overview of Financial Accounting (David Doran) – BEP166-PDF-ENG"], refs: ["JW Chapter 1"] },
+    2:  { theme: "Introduction (contd.)", topics: "Basic ground rules: concepts and conventions, How does a published annual report look like?", prereads: ["Overview of Financial Accounting (David Doran) – BEP166-PDF-ENG"], refs: ["JW Chapter 1"] },
+    3:  { theme: "Accounting for Long-term Assets", topics: "Accounting for long-term assets: Cost Determination, Depreciation, Disposal", prereads: ["Annual Report of V Guard Industries"], refs: ["JW Chapter 7, Accounting for Property, Plant, Equipment and Other Assets (William J. Bruns Jr.) – 193046-PDF-ENG"] },
+    4:  { theme: "Basic Accounting Equation", topics: "Basic accounting equation, Income statement, Balance sheet", prereads: ["Case: Chemalite Inc. – David A. Wilson – 177078-PDF-ENG"], refs: ["JW Chapter 1"] },
+    5:  { theme: "Basic Accounting Equation (contd.)", topics: "Basic accounting equation, Income statement, Balance sheet", prereads: ["Case: Chemalite Inc. – David A. Wilson – 177078-PDF-ENG"], refs: ["JW Chapter 1"] },
+    6:  { theme: "Basic Accounting Equation (contd.)", topics: "Basic accounting equation, Income statement, Balance sheet", prereads: ["Case: Chemalite Inc. – David A. Wilson – 177078-PDF-ENG"], refs: ["JW Chapter 1"] },
+    7:  { theme: "Basic Accounting Equation (contd.)", topics: "Basic accounting equation, Income statement, Balance sheet", prereads: ["Case: Chemalite Inc. – David A. Wilson – 177078-PDF-ENG"], refs: ["JW Chapter 1"] },
+    8:  { theme: "Accounting Information System", topics: "Accounting Information System: Mechanics of financial accounting, Accounting Cycle, Accounting records", prereads: ["Class exercises"], refs: ["JW Chapter 2 & 3", "Class exercises", "Mechanics of Financial Accounting (David F. Hawkins & Jacob Cohen) – 101119-PDF-ENG"] },
+    9:  { theme: "Accounting Information System (contd.)", topics: "Mechanics of financial accounting, Accounting Cycle, Accounting records", prereads: ["Class exercises"], refs: ["JW Chapter 2 & 3", "Mechanics of Financial Accounting (David F. Hawkins & Jacob Cohen) – 101119-PDF-ENG"] },
+    10: { theme: "Accounting Information System (contd.)", topics: "Mechanics of financial accounting, Accounting Cycle, Accounting records", prereads: ["Class exercises"], refs: ["JW Chapter 2 & 3"] },
+    11: { theme: "Accounting for Inventory", topics: "Accounting for Inventory, Inventory Measurement, Inventory Valuation", prereads: ["Case: Kombucha Canada Inc.: Merchandise Inventory Valuation – Ian Dunn, Jordan Sills – W21096-PDF-ENG"], refs: ["JW Chapter 4", "The Question of LIFO or FIFO: Which Is Preferable? (William J. Bruns Jr., Sharon Bruns) – 104087-PDF-ENG"] },
+    12: { theme: "Reporting and Analyzing Equity", topics: "Reporting and Analyzing Equity, Liability", prereads: [], refs: ["JW Chapter 08"] },
+    13: { theme: "Accounting for Long-term Bonds", topics: "Accounting for Long-term Liability, Accounting for par bonds, Accounting for discounted bonds, Accounting of premium bonds", prereads: [], refs: ["JW Chapter 07", "Financial Accounting Reading: Liability (Suraj Srinivasan) – 5079-PDF-ENG", "Liabilities and Time (William J Bruns Jr) – 93051-PDF-ENG"] },
+    14: { theme: "Cash Flow Statement", topics: "Why do we need Cash Flow Statement? Cash flow from operations, Cash flow from investing, Cash flow from Financing", prereads: [], refs: ["JW Chapter 11", "Accounting Standards: IAS 7, Ind AS 7"] },
+    15: { theme: "Cash Flow Statement (contd.)", topics: "Preparation and interpretation of Cash Flow Statement", prereads: ["Case: North Mountain Nursery, Inc. – Luann J. Lynch – UV0806-PDF-ENG"], refs: ["JW Chapter 11", "Preparing and Using the Statement of Cash Flows (Robert Simons & Antonio Davila) – 196108-PDF-ENG"] },
+    16: { theme: "Cash Flow Statement (contd.)", topics: "Preparation and interpretation of Cash Flow Statement", prereads: ["Case: North Mountain Nursery, Inc. – Luann J. Lynch – UV0806-PDF-ENG"], refs: ["JW Chapter 11", "Preparing and Using the Statement of Cash Flows – 196108-PDF-ENG"] },
+    17: { theme: "Introduction to Financial Statement Analysis", topics: "Introduction to Financial Statement Analysis", prereads: [], refs: ["JW Chapter 12", "Class Exercise"] },
+    18: { theme: "Financial Statement Analysis", topics: "Financial Statement Analysis, Ratio analysis: Manufacturing firms", prereads: ["Case: BNL Stores, Vaughan Radcliffe; Paul Cruz – W12213-PDF-ENG", "The Game of Financial Ratios"], refs: ["JW Chapter 12"] },
+    19: { theme: "Financial Statement Analysis (contd.)", topics: "Financial Statement Analysis, Ratio analysis: Manufacturing firms", prereads: ["Case: BNL Stores, Vaughan Radcliffe; Paul Cruz – W12213-PDF-ENG", "The Game of Financial Ratios"], refs: ["JW Chapter 12"] },
+    20: { theme: "Course Wrap-up", topics: "Course Wrap-up", prereads: [], refs: [] }
+  },
+  ME: {
+    1:  { theme: "Introduction to Managerial Economics", topics: "The theme of Managerial Economics – Microeconomics and Macroeconomics, Trade-offs, Positive versus normative analysis; Why study Microeconomics", prereads: [], refs: ["Ch 1"] },
+    2:  { theme: "Basics of Market Forces", topics: "Demand, supply and market equilibrium, Market mechanism and changes in market equilibrium", prereads: [], refs: ["Ch 2"] },
+    3:  { theme: "Concept of Elasticity", topics: "Degrees of elasticities; different types of elasticities; Short-run versus long-run elasticities", prereads: [], refs: ["Ch 2"] },
+    4:  { theme: "Consumer Behaviour Theory", topics: "Consumer Preferences, Indifference curves; Budget constraints, consumer choice; Marginal utility and consumer choice; Cost of living indexes", prereads: [], refs: ["Ch 3"] },
+    5:  { theme: "Consumer Behaviour Theory (contd.)", topics: "Consumer Preferences, Indifference curves; Budget constraints, consumer choice; Marginal utility and consumer choice; Cost of living indexes", prereads: [], refs: ["Ch 3"] },
+    6:  { theme: "Individual and Market Demand", topics: "Income and substitution effects; Network externalities; Empirical estimation of demand", prereads: [], refs: ["Ch 4"] },
+    7:  { theme: "Production Theory and Estimation", topics: "Short run and long run; Law of Diminishing Marginal Returns; Production with two variable inputs; Returns to scale; Estimation of production function", prereads: ["HBS Case: BYD, China, and Global Electric Vehicle Rivalry"], refs: ["Ch 6"] },
+    8:  { theme: "Production Theory and Estimation (contd.)", topics: "Short run and long run; Law of Diminishing Marginal Returns; Production with two variable inputs; Returns to scale; Estimation of production function", prereads: ["HBS Case: BYD, China, and Global Electric Vehicle Rivalry"], refs: ["Ch 6"] },
+    9:  { theme: "Cost Theory and Estimation", topics: "Types of Costs; Shapes of cost curves; Cost in the long run; Conditions for equilibrium; Economies and Diseconomies of scale; Economies of scope", prereads: [], refs: ["Ch 7"] },
+    10: { theme: "Cost Theory and Estimation (contd.)", topics: "Types of Costs; Shapes of cost curves; Cost in the long run; Conditions for equilibrium; Economies and Diseconomies of scale; Economies of scope", prereads: [], refs: ["Ch 7"] },
+    11: { theme: "Profit Maximization and Perfect Competition", topics: "Profit maximization; Marginal revenue, marginal cost and profit maximization; Shut down situation", prereads: [], refs: ["Ch 8"] },
+    12: { theme: "Analysis of Competitive Markets", topics: "Evaluating the gains and losses from Government policies – consumer and producer surplus; Price ceiling and minimum prices; Price supports and production quotas; Impact of a tax or subsidy", prereads: [], refs: ["Ch 9"] },
+    13: { theme: "Analysis of Competitive Markets (contd.)", topics: "Evaluating the gains and losses from Government policies – consumer and producer surplus; Price ceiling and minimum prices", prereads: [], refs: ["Ch 9"] },
+    14: { theme: "Market Structure of Monopoly", topics: "Reasons for monopoly; Monopoly power; Sources and social cost of monopoly power; Monopoly compared with perfect competition; Regulating a monopoly", prereads: [], refs: ["Ch 10"] },
+    15: { theme: "Market Structure of Monopoly (contd.)", topics: "Reasons for monopoly; Monopoly power; Sources and social cost of monopoly power; Monopoly compared with perfect competition; Regulating a monopoly", prereads: [], refs: ["Ch 10"] },
+    16: { theme: "Pricing with Market Power", topics: "Pricing Strategy; Price Discrimination; Intertemporal and Peak load pricing; Advertising", prereads: [], refs: ["Ch 11"] },
+    17: { theme: "Market Structure and Competitive Strategy in Monopolistic Competition", topics: "Equilibrium in the short-run and long-run; monopolistic competition and economic efficiency", prereads: [], refs: ["Ch 12"] },
+    18: { theme: "Oligopolistic Market", topics: "Cournot, Stackelberg and Bertrand models; Competition vs collusion – Prisoners' Dilemma; Kinked demand curve; Cartels", prereads: ["HBS Case: Apple Inc. in 2023"], refs: ["Ch 12"] },
+    19: { theme: "Oligopolistic Market (contd.)", topics: "Cournot, Stackelberg and Bertrand models; Competition vs collusion – Prisoners' Dilemma; Kinked demand curve; Cartels", prereads: ["HBS Case: Apple Inc. in 2023"], refs: ["Ch 12"] },
+    20: { theme: "Game Theory and Strategic Behavior", topics: "Dominant strategy; Nash equilibrium; Maximin strategies; Sequential games", prereads: [], refs: ["Ch 13"] }
+  },
+  'MM-I': {
+    1:  { theme: "Introduction to Marketing Management", topics: "Introduction to Marketing Management", prereads: [], refs: ["Text Book Chapter 1 & 2", "Levitt, Theodore. 'Marketing Myopia'. Harvard Business Review, 1960"] },
+    2:  { theme: "Introduction to Marketing Management (contd.)", topics: "Introduction to Marketing Management (contd.)", prereads: ["Amazon vs. Walmart: Clash of Business Models"], refs: ["Text Book Chapter 2", "Eric Almquist, John Senior & Nicolas Bloch, 'The Elements of Value' HBR, R1609C"] },
+    3:  { theme: "Analysing Marketing Environment and Competition", topics: "Analysing Marketing Environment and Competition", prereads: ["Singapore Airlines (A): The India Decision"], refs: ["Text Book Chapter 3 & 4", "Michael R. Porter 'Understanding Industry Structure,' 9707493"] },
+    4:  { theme: "Analysing Marketing Environment and Competition (contd.)", topics: "Analysing Marketing Environment and Competition (contd.)", prereads: ["Should Maruti Suzuki Invest in Electric Cars?"], refs: ["Text Book Chapter 3 & 4"] },
+    5:  { theme: "Consumer Behaviour", topics: "Consumer Behaviour", prereads: ["Pepperfry.com: Marketing to Manage a Customer Experience"], refs: ["Text Book Chapter 5 & 6", "More, Roger. 'Understanding Buyer Choice/Rejection Experience Processes for Complex High Technology Consumer Products' 910A04"] },
+    6:  { theme: "Consumer Behaviour (contd.)", topics: "Consumer Behaviour (contd.)", prereads: [], refs: ["Text Book Chapter 5 & 6", "Nicholas Toman, Brent Adamson & Cristina Gomez, 'The New Sales Imperative' R1702J", "Brent Adamson, Matthew Dixon & Nicholas Toman, 'The End of Solution Sales' R1207C"] },
+    7:  { theme: "Market Segmentation & Target Marketing", topics: "Market Segmentation & Target Marketing", prereads: ["Biopure Corporation (9598150)"], refs: ["Text Book Chapter 7", "Reading: Market Customization: Segmentation, Targeting, and Positioning"] },
+    8:  { theme: "Market Segmentation & Target Marketing (contd.)", topics: "Market Segmentation & Target Marketing (contd.)", prereads: ["One Plus: Crossing the Chasm in Smartphone Market"], refs: ["Text Book Chapter 7", "Reading: Unlock the Mysteries of Your Customer Relationships"] },
+    9:  { theme: "Positioning for Competitive Advantage", topics: "Positioning for Competitive Advantage", prereads: ["Old Spice: Revitalizing Glacial Falls (KEL619)", "Brand Positioning Statements UV5792"], refs: ["Text Book Chapter 7"] },
+    10: { theme: "Product/Service, Branding", topics: "Meaning of Product/Service, Product Classification, Brand and Elements of Branding", prereads: ["Dove: Evolution of a Brand"], refs: ["Text Book Chapter 8", "What is Branding Really About – Jonan Gronlund", "Reading: Branding in the Age of Social Media – Douglas B. Holt"] },
+    11: { theme: "Product Life Cycle & New Product Development", topics: "Product Life Cycle, New Product Development and Product Extension Strategies", prereads: ["Omber Tie Dye: Splat Hair/Trends or Fads"], refs: ["Text Book Chapter 9", "Reading: Break Free from The Product Cycle – Yongme Moon"] },
+    12: { theme: "Pricing", topics: "Pricing", prereads: ["The New York Times Paywall"], refs: ["Text Book Chapter 10 & 11", "Readings: Pricing to Create Shared Value"] },
+    13: { theme: "Pricing (contd.)", topics: "Pricing (contd.)", prereads: ["Atlantic Computers: A Bundle of Pricing Options"], refs: ["Text Book Chapter 10 & 11"] },
+    14: { theme: "Place", topics: "Place", prereads: ["Natureview Farm (HBS2073)"], refs: ["Text Book Chapter 12 & 13", "Anderson, Erin, George S. Day, and V. Kasturi Rangan. 'Strategic channel design.' MIT Sloan Management Review 38.4 (1997): 59."] },
+    15: { theme: "Place (contd.)", topics: "Place (contd.)", prereads: ["Castrol India Limited: An Innovative Distribution Channel"], refs: ["Text Book Chapter 12 & 13"] },
+    16: { theme: "Promotion Decisions", topics: "Promotion Decisions", prereads: ["Colgate Palmolive Company: The Precision Toothbrush (HBS593064)"], refs: ["Text Book Chapter 14, 15 & 16", "Kotler, Philip, and William Mindak. 'Marketing and public relations.' Journal of Marketing 42.4 (1978): 13-20."] },
+    17: { theme: "Promotion Decisions (contd.)", topics: "Promotion Decisions (contd.)", prereads: ["Reinventing Officer's Choice Whisky: Spoiled for Choice"], refs: ["Text Book Chapter 14, 15 & 16"] },
+    18: { theme: "Developing a Marketing Plan", topics: "Developing a marketing plan", prereads: ["Beyond the Bean"], refs: ["Text Book: Appendix 1", "Reading: Marketing Plan Development; Robert E. Spekman; UV6731"] },
+    19: { theme: "Marketing Insights and Trends", topics: "Marketing Insights and Trends (Guest Lecture)", prereads: ["Guest Lecture – no pre-reads assigned"], refs: [] },
+    20: { theme: "Marketing Insights and Trends", topics: "Marketing Insights and Trends (Guest Lecture)", prereads: ["Guest Lecture – no pre-reads assigned"], refs: [] }
+  },
+  MC: {
+    1:  { theme: "Foundations of Managerial Communication", topics: "Communication process and interpretation, Communication styles in organizations, Perception, context, and meaning", prereads: [], refs: ["Chapter 1 & 4"] },
+    2:  { theme: "Building Professional Identity and Credibility", topics: "Professional identity and impression formation, Communication and personal credibility, Self-positioning in professional contexts", prereads: [], refs: ["Chapter 2"] },
+    3:  { theme: "Understanding Audiences and Stakeholder Communication", topics: "Audience and stakeholder analysis, Communication and stakeholder influence, Communication strategy across contexts", prereads: [], refs: ["Chapter 4"] },
+    4:  { theme: "Professional Presence and Message Framing", topics: "Framing and positioning of messages, Professional presence in communication, Clarity, structure, and impact", prereads: ["HBR 4 – The Science of Strong Business Writing"], refs: ["Chapter 5"] },
+    5:  { theme: "Listening, Dialogue, and Interpersonal Awareness", topics: "Listening and conversational effectiveness, Dialogue and interpersonal understanding, Communication barriers and awareness", prereads: ["HBR8: Are you really a good Listener"], refs: ["Chapter 2"] },
+    6:  { theme: "Persuasion and Influence in Organizations", topics: "Persuasion in managerial contexts, Influence and communication strategy, Communication and psychological response", prereads: ["HBR 1 – The Necessary Art of Persuasion"], refs: [] },
+    7:  { theme: "Conflict and Communication in Organization", topics: "Conflict communication and diagnosis, Power and interpersonal differences, Communication for conflict resolution", prereads: ["The Conflict-Intelligent Leader"], refs: [] },
+    8:  { theme: "Communication in Negotiation Contexts", topics: "Communication in negotiation processes, Negotiation strategies and interaction, Emotions and decision-making in negotiation", prereads: [], refs: [] },
+    9:  { theme: "Managing Emotion and Difficult Personalities", topics: "Emotional intelligence in communication, Communication in difficult interactions, Assertive and de-escalation communication", prereads: ["Difficult Conversations A", "Difficult Conversations B"], refs: [] },
+    10: { theme: "Giving and Receiving Feedback", topics: "Feedback and communication effectiveness, Communication and psychological safety, Communication during change and resistance", prereads: [], refs: [] },
+    11: { theme: "Communication during Organizational Crisis", topics: "Organizational crisis and communication, Stakeholder response during crises, Crisis messaging and public response", prereads: ["Wells Fargo Circles the Wagons: Communicating during a Crisis", "The Maggi Noodle Safety Crisis in India"], refs: [] },
+    12: { theme: "Professional Writing and Workplace Communication", topics: "Professional writing in organizations, Structured workplace communication, Persuasive and negative message writing", prereads: ["DRW Technologies"], refs: ["Chapter 6, 7, 8 & 9"] },
+    13: { theme: "Business Reporting and Career Communication", topics: "Workplace communication and professional writing, Business reports and structured written communication, Resume writing and professional positioning", prereads: [], refs: ["Chapter 12 & 14"] },
+    14: { theme: "Cultural Communication", topics: "Culture and communication behavior, Communication across cultures, Cultural intelligence in workplaces", prereads: ["Cross-Cultural Communication Takes More than Manners"], refs: ["Chapter 3"] },
+    15: { theme: "Non-verbal Communication", topics: "Non-verbal behavior in communication, Body language and interpretation, Verbal and non-verbal alignment", prereads: ["Nonverbal Communication in Negotiation"], refs: ["Chapter 4"] },
+    16: { theme: "Visual Design and Delivery in Presentations", topics: "Presentation design and structure, Presentation delivery and engagement, Confidence and audience interaction", prereads: [], refs: ["Chapter 13"] },
+    17: { theme: "Strategic Business Presentations", topics: "Audience-centered presentation planning, Structured content planning, Structured delivery", prereads: [], refs: [] },
+    18: { theme: "Narrative Design for Business Presentations", topics: "Developing compelling business narratives, Structuring ideas for audience engagement, Addressing questions with clarity and confidence", prereads: [], refs: [] },
+    19: { theme: "Business Presentations (Output Sessions)", topics: "Business Presentations (Output Sessions)", prereads: ["Student presentation sessions – no pre-reads"], refs: [] },
+    20: { theme: "Business Presentations (Output Sessions)", topics: "Business Presentations (Output Sessions)", prereads: ["Student presentation sessions – no pre-reads"], refs: [] }
+  },
+  BS: {
+    1:  { theme: "Business Statistics", topics: "To be updated", prereads: ["Pre-reads will be added soon"], refs: [] }
+  }
+};
+
+
+function getPrereads(courseKey, sessionNum) {
+  if (!PREREADS[courseKey]) return null;
+  return PREREADS[courseKey][sessionNum] || null;
+}
+
+// ── COURSE CONFIG ──────────────────────────────────────────────
+const SEC={A:{v:'CR 003'},B:{v:'CR 004'},C:{v:'CR 102'},D:{v:'CR 103'},E:{v:'CR 113'},F:{v:'CR 114'}};
+const CNAME={BS:'Business Statistics',FRA:'Financial Reporting & Analysis',ME:'Managerial Economics',MC:'Managerial Communication','MM-I':'Marketing Management I',MIOB:'Micro Organisational Behaviour'};
+
+// CSS var names per course (for theming)
+const CVAR={BS:'bs',FRA:'fra',ME:'me',MC:'mc','MM-I':'mmi',MIOB:'miob'};
+
+const FAC={
+  'BS[VCT]':'Prof. Vinu C T','BS[SUSH]':'Prof. Shubhendu Singh','BS[MMS]':'Prof. M. M. Siddartha','BS[SMG]':'Prof. S. M. Govindaluri',
+  'FRA[NG]':'Prof. Naresh G','FRA[SMA]':'Prof. Suhas M Avabruth','FRA[DM]':'Prof. Dharani M',
+  'ME[VM]':'Prof. Varun Mahajan','ME[VB]':'Prof. Vasavi Bhatt','ME[MS]':'Prof. Madhuri Saripalle',
+  'MC[RRB]':'Prof. Rashmi R Behera','MC[SS]':'Prof. Shameem','MC[TS]':'Prof. Tulika Sharma',
+  'MM-I[AS]':'Prof. Anirban Som','MM-I[AJS]':'Prof. Ajitha S','MM-I[RPS]':'Prof. R. P. Singh',
+  'MM-I[PKT]':'Prof. P. K. Teja','MM-I[SMS]':'Prof. Satish S M',
+  'MIOB[PN]':'Prof. Papri Nath','MIOB[VV]':'Prof. Vijaya V','MIOB[AKT]':'Prof. A. K. Totawar'
+};
+const TIMES=['08:30–10:00','10:30–12:00','12:15–13:45','14:45–16:15','16:30–18:00','18:15–19:45'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYSFULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const SPECIALS=['Mid-Term','End-Term','AOL WORKSHOP','Independence Day','DAKSHA'];
+const SICONS={'Mid-Term':'📋','End-Term':'📝','AOL WORKSHOP':'🧘','Independence Day':'🇮🇳','DAKSHA':'🎓'};
+
+// Build DB
+const DB={};const _seen=new Set();const ALL_DATES=[];
+SCHED.forEach(([ds,sec,slots])=>{if(!DB[ds])DB[ds]={};DB[ds][sec]=slots;if(!_seen.has(ds)){_seen.add(ds);ALL_DATES.push(ds);}});
+ALL_DATES.sort((a,b)=>pdate(a)-pdate(b));
+// Remove Sundays that have no real classes (only specials or empty)
+const _filtered = ALL_DATES.filter(ds => {
+  const d = pdate(ds);
+  if (d.getDay() !== 0) return true; // keep non-Sundays
+  // For Sundays, only keep if they have actual class slots (not just specials)
+  const allSecs = Object.values(DB[ds] || {});
+  for (const slots of allSecs) {
+    for (const s of slots) {
+      if (s && !['Mid-Term','End-Term','AOL WORKSHOP','Independence Day','DAKSHA'].some(x=>s.includes(x))) {
+        return true; // has real class
+      }
+    }
+  }
+  return false; // Sunday with only specials or empty — remove
+});
+ALL_DATES.length = 0;
+_filtered.forEach(d => ALL_DATES.push(d));
+
+// Build SESSION_MAP
+const SESSION_MAP={};
+SESSION_MAP_RAW.forEach(([ds,sec,idx,snum])=>{SESSION_MAP[ds+'|'+sec+'|'+idx]=snum;});
+
+function pdate(ds){const[d,m,y]=ds.split('-');return new Date(+y,+m-1,+d);}
+function fmtDate(ds){return pdate(ds).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function dayOf(ds){return DAYS[pdate(ds).getDay()];}
+function dayFullOf(ds){return DAYSFULL[pdate(ds).getDay()];}
+function getCK(s){if(!s)return null;for(const k of Object.keys(CVAR))if(s.startsWith(k))return k;return null;}
+function isSp(s){return s&&SPECIALS.some(x=>s.includes(x));}
+function getSession(ds,sec,idx){return SESSION_MAP[ds+'|'+sec+'|'+idx]||null;}
+
+// Helper: get CSS var value for course
+function cv(ck,type){
+  const v=CVAR[ck];
+  return v?`var(--${v}-${type})`:'var(--border)';
+}
+
+// STATE
+let curSec='A',curView='d',curIdx=0;
+
+// Today date string
+const todayStr=(()=>{const t=new Date();return `${String(t.getDate()).padStart(2,'0')}-${String(t.getMonth()+1).padStart(2,'0')}-${t.getFullYear()}`})();
+
+// Find nearest date
+(()=>{const today=new Date();today.setHours(0,0,0,0);let best=0,bestD=Infinity;ALL_DATES.forEach((ds,i)=>{const diff=Math.abs(pdate(ds)-today);if(diff<bestD){bestD=diff;best=i;}});curIdx=best;})();
+
+// ── THEME ──────────────────────────────────────────────────────
+function initTheme(){
+  const saved=localStorage.getItem('pgpm_theme')||'dark';
+  setTheme(saved,false);
+}
+function toggleTheme(){
+  const current=document.documentElement.getAttribute('data-theme');
+  const next=current==='dark'?'light':'dark';
+  gtag('event','theme_toggled',{theme:next});
+  setTheme(next,true);
+}
+function setTheme(t,save){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';
+  document.querySelector('meta[name="theme-color"]').content=t==='dark'?'#09090b':'#f5f5f7';
+  if(save)localStorage.setItem('pgpm_theme',t);
+}
+
+// ── ONBOARDING ─────────────────────────────────────────────────
+let obPicked=null;
+function buildOnboard(){
+  const c=document.getElementById('obSections');
+  Object.entries(SEC).forEach(([s,info])=>{
+    const b=document.createElement('button');
+    b.className='ob-sec';
+    b.innerHTML=`Section ${s}<span class="ob-venue">${info.v}</span>`;
+    b.onclick=()=>{obPicked=s;document.querySelectorAll('.ob-sec').forEach(x=>x.classList.remove('picked'));b.classList.add('picked');document.getElementById('obBtn').disabled=false;};
+    c.appendChild(b);
+  });
+}
+function confirmSection(){
+  if(!obPicked)return;
+  localStorage.setItem('pgpm_section',obPicked);
+  curSec=obPicked;
+  hideOnboard();
+}
+function showOnboard(isChange=false){
+  obPicked=null;document.getElementById('obBtn').disabled=true;
+  document.querySelectorAll('.ob-sec').forEach(x=>x.classList.remove('picked'));
+  if(isChange){document.querySelector('.ob-title').textContent='Change Section';document.querySelector('.ob-sub').textContent='Pick a different section to switch your view';}
+  document.getElementById('onboard').style.display='flex';
+}
+function hideOnboard(){
+  document.getElementById('onboard').style.display='none';
+  const row=document.getElementById('secRow');row.innerHTML='';
+  Object.keys(SEC).forEach(s=>{const b=document.createElement('button');b.className='stab'+(s===curSec?' on':'');b.textContent='Section '+s;b.onclick=()=>pickSec(s);row.appendChild(b);});
+  render();
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  initTheme();
+  buildOnboard();
+  const saved=localStorage.getItem('pgpm_section');
+  if(saved&&SEC[saved]){curSec=saved;document.getElementById('onboard').style.display='none';}
+  else{document.getElementById('onboard').style.display='flex';}
+  const row=document.getElementById('secRow');
+  Object.keys(SEC).forEach(s=>{const b=document.createElement('button');b.className='stab'+(s===curSec?' on':'');b.textContent='Section '+s;b.onclick=()=>pickSec(s);row.appendChild(b);});
+  buildDayBtns();
+  const leg=document.getElementById('wleg');
+  Object.entries(CVAR).forEach(([k,v])=>{leg.innerHTML+=`<div class="li"><div class="ld" style="background:var(--${v}-ac)"></div>${CNAME[k]||k}</div>`;});
+  render();
+  setupInstall();
+});
+
+function pickSec(s){
+  curSec=s;
+  document.querySelectorAll('.stab').forEach((b,i)=>b.classList.toggle('on',Object.keys(SEC)[i]===s));
+  gtag('event','section_selected',{section:s});
+  render();
+}
+function setView(v){
+  curView=v;
+  gtag('event','view_switched',{view:v==='d'?'daily':'weekly'});
+  document.getElementById('dailyWrap').style.display=v==='d'?'flex':'none';
+  document.getElementById('weeklyWrap').style.display=v==='w'?'flex':'none';
+  document.getElementById('weeklyWrap').style.flexDirection=v==='w'?'column':'';
+  document.getElementById('vtD').classList.toggle('on',v==='d');
+  document.getElementById('vtW').classList.toggle('on',v==='w');
+  render();
+}
+function shift(d){curIdx=Math.max(0,Math.min(ALL_DATES.length-1,curIdx+d));render();}
+
+function buildDayBtns(){
+  const sc=document.getElementById('dscroll');sc.innerHTML='';
+  ALL_DATES.forEach((ds,i)=>{
+    const d=pdate(ds);
+    const b=document.createElement('button');
+    b.className='dbt'+(ds===todayStr?' today-dot':'');
+    b.innerHTML=`<span class="dn">${DAYS[d.getDay()]}</span>${d.getDate()} ${d.toLocaleString('en',{month:'short'})}`;
+    b.onclick=()=>{curIdx=i;render();};
+    sc.appendChild(b);
+  });
+}
+function syncDayBtns(){
+  document.querySelectorAll('.dbt').forEach((b,i)=>b.classList.toggle('on',i===curIdx));
+  const sc=document.getElementById('dscroll');
+  const ab=sc.children[curIdx];
+  if(ab)ab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+function render(){
+  document.getElementById('venTxt').textContent=SEC[curSec].v;
+  if(curView==='d'){renderDaily();syncDayBtns();}else renderWeekly();
+}
+
+function toggleExpand(id){
+  const pr=document.getElementById('pr-'+id);
+  const btn=document.getElementById('eb-'+id);
+  if(!pr||!btn)return;
+  const open=pr.classList.contains('open');
+  pr.classList.toggle('open',!open);
+  btn.classList.toggle('open',!open);
+  if(!open) gtag('event','prereads_opened',{card_id:id,section:curSec});
+}
+
+function buildPrereadsHTML(ck,snum,acVar,bgVar,brVar){
+  const data=getPrereads(ck,snum);
+  let h=`<div class="pr-top" style="background:${bgVar};border-bottom:1px solid ${brVar}">`;
+  if(data){
+    h+=`<div class="pr-theme">${data.theme}</div>`;
+    if(data.topics)h+=`<div class="pr-topics">${data.topics}</div>`;
+  } else {
+    h+=`<div class="pr-theme">Session ${snum||'–'}</div>`;
+  }
+  h+=`</div><div class="pr-body">`;
+  if(!data){
+    h+=`<div class="pr-empty"><span>📚 Pre-reads will be added soon</span></div>`;
+  } else {
+    if(data.prereads&&data.prereads.length){
+      h+=`<div class="pr-section-lbl" style="color:${acVar}">📚 Pre-Reads</div>`;
+      data.prereads.forEach(pr=>{
+        const isAct=pr.toLowerCase().includes('activity')||pr.toLowerCase().includes('no pre-reads')||pr.toLowerCase().includes('guest lecture');
+        h+=`<div class="pr-item-card" style="background:${bgVar};border-left-color:${acVar};border:1px solid ${brVar};border-left:3px solid ${acVar}">
+          <div class="pr-icon">${isAct?'✏️':'📄'}</div>
+          <div class="pr-txt" style="color:var(--text)">${pr}</div>
+        </div>`;
+      });
+    }
+    if(data.refs&&data.refs.length){
+      h+=`<div class="pr-section-lbl" style="color:${acVar}">📗 References</div>`;
+      data.refs.forEach(r=>{
+        h+=`<div class="pr-ref-row"><div class="pr-ref-arr" style="color:${acVar}">›</div><div class="pr-ref-txt">${r}</div></div>`;
+      });
+    }
+  }
+  h+=`</div>`;
+  return h;
+}
+
+function renderDaily(){
+  const ds=ALL_DATES[curIdx];
+  const slots=(DB[ds]&&DB[ds][curSec])||[];
+  const spVal=slots.find(s=>s&&isSp(s));
+  const spKey=spVal?Object.keys(SICONS).find(k=>spVal.includes(k)):null;
+
+  let h=`<div class="dhdr"><div class="dname">${dayFullOf(ds)}</div><div class="ddate">${fmtDate(ds)}</div>${spVal?`<div class="sbadge">${spVal}</div>`:''}</div>`;
+
+  if(spVal){
+    h+=`<div class="empty"><div class="ei">${SICONS[spKey]||'📅'}</div><p>${spVal}</p></div>`;
+    document.getElementById('dcontent').innerHTML=h;return;
+  }
+
+  const cls=slots.map((s,i)=>({s,i})).filter(x=>x.s&&!isSp(x.s));
+  if(!cls.length){
+    h+=`<div class="empty"><div class="ei">☀️</div><p>No classes today</p></div>`;
+  } else {
+    h+='<div class="cards">';
+    cls.forEach(({s,i})=>{
+      const ck=getCK(s);
+      const v=ck?CVAR[ck]:null;
+      const ac=v?`var(--${v}-ac)`:'var(--muted)';
+      const bg=v?`var(--${v}-bg)`:'var(--surface)';
+      const br=v?`var(--${v}-br)`:'var(--border)';
+      const name=ck?CNAME[ck]:s;
+      const fac=FAC[s]||'';
+      const t=TIMES[i];
+      const[t1,t2]=t.split('–');
+      const snum=getSession(ds,curSec,i);
+      const id=ds.replace(/-/g,'')+'_'+curSec+'_'+i;
+
+      h+=`<div class="card" style="background:${bg};border-color:${br}">
+        <div class="card-main" onclick="toggleExpand('${id}')">
+          <div class="ctm">
+            <div class="t1">${t1}</div><div class="t1">–${t2}</div>
+            <div class="cdot" style="background:${ac}"></div>
+          </div>
+          <div class="cbody">
+            <div class="cname">${name}</div>
+            <div class="ccode">[${s}]</div>
+            <div class="pills">
+              ${snum?`<div class="spill" style="color:${ac};border-color:${br};background:${bg}">Session ${snum}</div>`:''}
+              ${fac?`<div class="pill">👨‍🏫 ${fac}</div>`:''}
+              <div class="pill">📍 ${SEC[curSec].v}</div>
+              <div class="pill">🕐 ${t}</div>
+            </div>
+          </div>
+        </div>
+        <button class="expand-btn" id="eb-${id}" onclick="toggleExpand('${id}')" style="color:${ac};border-top-color:${br}">
+          <span>📖 Pre-reads & References</span><span class="arrow">▼</span>
+        </button>
+        <div class="prereads" id="pr-${id}">
+          <div class="prereads-inner">${buildPrereadsHTML(ck,snum,ac,bg,br)}</div>
+        </div>
+      </div>`;
+    });
+    h+='</div>';
+  }
+  document.getElementById('dcontent').innerHTML=h;
+  document.getElementById('dailyScroll').scrollTop=0;
+}
+
+function renderWeekly(){
+  const labs=['8:30','10:30','12:15','14:45','16:30','18:15'];
+  let h=`<thead><tr><th>Date</th>${labs.map(t=>`<th>${t}</th>`).join('')}</tr></thead><tbody>`;
+  ALL_DATES.forEach(ds=>{
+    const slots=(DB[ds]&&DB[ds][curSec])||[];
+    const d=pdate(ds);
+    const isToday=ds===todayStr;
+    const lbl=`${DAYS[d.getDay()]}<br>${d.getDate()}/${d.getMonth()+1}`;
+    h+=`<tr><td class="dl" style="${isToday?'color:var(--accent);font-weight:800':''}">${lbl}${isToday?' 🔵':''}</td>`;
+    for(let i=0;i<6;i++){
+      const s=slots[i];
+      if(!s){h+='<td></td>';continue;}
+      if(isSp(s)){const sh=s.replace(' WORKSHOP','').replace('Independence Day','🇮🇳');h+=`<td><span class="gp sp">${sh}</span></td>`;continue;}
+      const ck=getCK(s);const v=ck?CVAR[ck]:null;
+      const st=v?`background:var(--${v}-bg);color:var(--${v}-ac);border-color:var(--${v}-br)`:'color:var(--muted)';
+      const snum=getSession(ds,curSec,i);
+      h+=`<td><span class="gp" style="${st}">${s.split('[')[0]}${snum?`<span class="gsn"> S${snum}</span>`:''}</span></td>`;
+    }
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('wtbl').innerHTML=h;
+}
+
+// PWA INSTALL
+let deferredPrompt=null;
+function setupInstall(){
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').style.display='flex';});
+  document.getElementById('installBtn').addEventListener('click',async()=>{
+    if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBar').style.display='none';}
+    else{alert('To install on iPhone: tap Share → "Add to Home Screen"');}
+  });
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone=window.matchMedia('(display-mode:standalone)').matches;
+  if(isIOS&&!isStandalone){document.getElementById('installBar').style.display='flex';document.getElementById('installBtn').textContent='How?';document.querySelector('#installBar p').innerHTML='📲 Tap Share → "Add to Home Screen" to install';}
+}
+
+// SERVICE WORKER
+if('serviceWorker' in navigator){
+  const sw=`const C='pgpm-v3';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll([location.pathname])));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match(location.pathname))));});`;
+  const blob=new Blob([sw],{type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+</script>
+</body>
+</html>
